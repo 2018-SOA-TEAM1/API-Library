@@ -2,9 +2,9 @@
 development:
   DB_FILENAME: app/infrastructure/database/local/dev.db
   # Application
-  APP_HOST: http://localhost:9292
+  API_HOST: http://localhost:9292
 
 test:
   DB_FILENAME: app/infrastructure/database/local/test.db
   # Application
-  APP_HOST: http://localhost:9292
+  API_HOST: http://localhost:9090

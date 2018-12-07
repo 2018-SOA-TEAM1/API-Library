@@ -1,86 +1,74 @@
 # frozen_string_literal: true
 
 require_relative '../helpers/spec_helper.rb'
-require_relative '../helpers/vcr_helper.rb'
 
-describe 'Tests MLBAtBat libiary' do
-  VcrHelper.setup_vcr
-
-  before do
-    VcrHelper.configure_vcr_for_mlb
+describe 'Unit test of MLBAtBat API gateway' do
+  it 'must report alive status' do
+    alive = MLBAtBat::Gateway::Api.new(MLBAtBat::App.config).alive?
+    _(alive).must_equal true
   end
 
-  after do
-    VcrHelper.eject_vcr
+  it 'must be able to search a game from MLB API' do
+    res = MLBAtBat::Gateway::Api.new(MLBAtBat::App.config)
+      .search_game(GAME_DATE_API, SEARCH_TEAM_NAME)
+
+    _(res.success?).must_equal true
+    data = res.parse
+
+    _(data.keys.count).must_be :>=, 11
+    _(data['innings'].count).must_equal 10 # (0th inning is empty)
+    _(data['gcms'].count).must_equal 3
   end
 
-  describe 'Schedule information' do
-    before do
-      @schedule = MLBAtBat::MLB::ScheduleMapper.new
-        .get_schedule(SPORT_ID, GAME_DATE)
-    end
+  it 'must find game which is already in db with date and teamname' do
+    # GIVEN a game is in the database
+    MLBAtBat::Gateway::Api.new(MLBAtBat::App.config)
+      .search_game(GAME_DATE_API, SEARCH_TEAM_NAME)
 
-    it 'HAPPY: schedule should provide correct game date' do
-      _(@schedule.date).must_equal CORRECT['date'] \
-        .split('-').join('').to_i
-    end
+    # WHEN we request a game with date and team_name
+    res = MLBAtBat::Gateway::Api.new(MLBAtBat::App.config)
+      .find_game_db(GAME_DATE_API, SEARCH_TEAM_NAME)
 
-    it 'HAPPY: schedule should provide correct total game numbers' do
-      _(@schedule.total_games).must_equal CORRECT['total_games']
-    end
+    # THEN we should see a game
+    _(res.success?).must_equal true
+    data = res.parse
+    
+    _(data.keys).must_include 'game_pk'
+    _(data['game_pk']).must_equal 530_779
+    _(data['home_team_name']).must_equal 'Baltimore Orioles'
   end
 
-  describe 'Live game information' do
-    before do
-      @schedule = MLBAtBat::MLB::ScheduleMapper.new
-        .get_schedule(SPORT_ID, GAME_DATE)
-      @live_games = @schedule.live_games
-      @total_games = @schedule.total_games
-    end
+  it 'must find first game in db' do
+    # GIVEN a game is in the database
+    MLBAtBat::Gateway::Api.new(MLBAtBat::App.config)
+      .search_game(GAME_DATE_API, SEARCH_TEAM_NAME)
 
-    it 'HAPPY: live game should provide correct game informations' do
-      (0...@total_games).each do |game_idx|
-        _(@live_games[game_idx].date).must_equal \
-          CORRECT['live_games'][game_idx]['date'] \
-          .split('-').join('').to_i
+    # WHEN we request first game
+    res = MLBAtBat::Gateway::Api.new(MLBAtBat::App.config)
+      .find_first_game
 
-        _(@live_games[game_idx].detailed_state).must_equal \
-          CORRECT['live_games'][game_idx]['detailed_state']
+    # THEN we should see a game
+    _(res.success?).must_equal true
+    data = res.parse
+    _(data.keys.count).must_be :>=, 11
+    _(data['innings'].count).must_equal 10 # (0th inning is empty)
+    _(data['gcms'].count).must_equal 3
+  end
 
-        _(@live_games[game_idx].current_hitter_name).must_equal \
-          CORRECT['live_games'][game_idx]['current_player']
+  it 'must find all games in db' do
+    # GIVEN a game is in the database
+    MLBAtBat::Gateway::Api.new(MLBAtBat::App.config)
+      .search_game(GAME_DATE_API, SEARCH_TEAM_NAME)
 
-        _(@live_games[game_idx].home_team_name).must_equal \
-          CORRECT['live_games'][game_idx]['home_team_name']
+    # WHEN we request all games
+    res = MLBAtBat::Gateway::Api.new(MLBAtBat::App.config)
+      .find_all_games
 
-        _(@live_games[game_idx].away_team_name).must_equal \
-          CORRECT['live_games'][game_idx]['away_team_name']
+    # THEN we should see a list of games
+    _(res.success?).must_equal true
+    data = res.parse
 
-        _(@live_games[game_idx].home_team_runs).must_equal \
-          CORRECT['live_games'][game_idx]['home_team_status']['runs']
-
-        _(@live_games[game_idx].home_team_hits).must_equal \
-          CORRECT['live_games'][game_idx]['home_team_status']['hits']
-
-        _(@live_games[game_idx].home_team_errors).must_equal \
-          CORRECT['live_games'][game_idx]['home_team_status']['errors']
-
-        _(@live_games[game_idx].away_team_runs).must_equal \
-          CORRECT['live_games'][game_idx]['away_team_status']['runs']
-
-        _(@live_games[game_idx].away_team_hits).must_equal \
-          CORRECT['live_games'][game_idx]['away_team_status']['hits']
-
-        _(@live_games[game_idx].away_team_errors).must_equal \
-          CORRECT['live_games'][game_idx]['away_team_status']['errors']
-      end
-    end
-
-    it 'SAD: shoud raise exception if given wrong gamePk' do
-      proc do
-        @live_game = MLBAtBat::MLB::LiveGameMapper.new
-          .live_game_info(WRONG_PK_ID)
-      end.must_raise MLBAtBat::MLB::Api::Response::InternalServerError
-    end
+    _(data['livegames'].count).must_be :>=, 1
+    _(data['livegames'].first['game_pk']).must_equal 530_779
   end
 end

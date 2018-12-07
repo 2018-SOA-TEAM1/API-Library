@@ -2,7 +2,7 @@
 
 require 'http'
 
-module MLBAtNat
+module MLBAtBat
   module Gateway
     # Infrastructure to call CodePraise API
     class Api
