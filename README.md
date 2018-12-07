@@ -1,15 +1,4 @@
-# Architecture (2018.11.11 update)
-#### wholegame_mapper (root mapper)
-- inning_mapper -> play_mapper
-- player_mapper
-- game_changing_moments_mapper (game changing moments)
-#### wholegame (root)
-- inning -> play
-- players -> player
-- game_changing_mements
-
-
-# MLBAtBat (2018.11.10 update)
+# MLBAtBat 
 
 Application that notifies you that your favorite player is at bat. Use it to keep following game when you are working! Besides, you can get game changing moments informariton and discuss with others on message board.
 
