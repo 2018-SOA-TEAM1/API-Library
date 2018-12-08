@@ -1,20 +1,32 @@
 # frozen_string_literal: true
 
 require 'dry/transaction'
-require 'dry/monads'
 
 module MLBAtBat
   module Service
-    # Retrieves array of all listed project entities
+    # Find game with team_name and date in db
     class FindGame
-      include Dry::Monads::Result::Mixin
+      include Dry::Transaction
 
-      def call(date, team_name)
-        game_info = Repository::For.klass(Entity::LiveGame)
-          .find(date, team_name)
-        Success(game_info)
+      step :find_game
+      step :depresent_game
+
+      private
+
+      def find_game(input)
+        result = Gateway::Api.new(MLBAtBat::App.config)
+          .find_game_db(input[:date], input[:team_name])
+        result.success? ? Success(result.payload) : Failure(result.message)
       rescue StandardError
-        Failure('Can not get game from db using date and team_name.')
+        Failure('Cannot find game right now; please try again later')
+      end
+
+      def depresent_game(livegame_json)
+        Representer::LiveGame.new(OpenStruct.new)
+          .from_json(livegame_json)
+          .yield_self { |game_info| Success(game_info) }
+      rescue StandardError
+        Failure('Error in the game -- please try again')
       end
     end
   end

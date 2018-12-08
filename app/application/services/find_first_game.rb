@@ -4,34 +4,21 @@ require 'dry/transaction'
 
 module MLBAtBat
   module Service
-    # Add project into database and get it
-    class SearchGame
+    # Retrieves first game in db (it should have at least 1 record in db)
+    class FindFirstGame
       include Dry::Transaction
 
-      step :validate_input
-      step :request_game
+      step :find_first_game
       step :depresent_game
 
       private
 
-      def validate_input(input)
-        if input[:date].success?
-          date = input[:date][:game_date]
-          # convert it back to correct format
-          date.tr! '/', '-'
-          Success(date: date, team_name: input[:team_name])
-        else
-          Failure(input[:date].errors.values.join('; '))
-        end
-      end
-
-      def request_game(input)
+      def find_first_game
         result = Gateway::Api.new(MLBAtBat::App.config)
-          .search_game(input[:date], input[:team_name])
-
+          .find_first_game
         result.success? ? Success(result.payload) : Failure(result.message)
       rescue StandardError
-        Failure('Cannot add projects right now; please try again later')
+        Failure('Cannot find first game right now; please try again later')
       end
 
       def depresent_game(wholegame_json)
