@@ -20,7 +20,7 @@ describe 'Unit test of MLBAtBat API gateway' do
     _(data['gcms'].count).must_equal 3
   end
 
-  it 'must find game which is already in db with date and teamname' do
+  it 'must find game_info with date and teamname which is already in db' do
     # GIVEN a game is in the database
     MLBAtBat::Gateway::Api.new(MLBAtBat::App.config)
       .search_game(GAME_DATE_API, SEARCH_TEAM_NAME)
@@ -29,10 +29,10 @@ describe 'Unit test of MLBAtBat API gateway' do
     res = MLBAtBat::Gateway::Api.new(MLBAtBat::App.config)
       .find_game_db(GAME_DATE_API, SEARCH_TEAM_NAME)
 
-    # THEN we should see a game
+    # THEN we should see a game_info
     _(res.success?).must_equal true
     data = res.parse
-    
+
     _(data.keys).must_include 'game_pk'
     _(data['game_pk']).must_equal 530_779
     _(data['home_team_name']).must_equal 'Baltimore Orioles'

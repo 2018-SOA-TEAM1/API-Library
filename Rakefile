@@ -11,7 +11,7 @@ task :gen do
   sh 'ruby mlb_stats_info.rb'
 end
 
-desc 'Run unit and integration tests'
+desc 'Run unit and services tests'
 Rake::TestTask.new(:spec) do |t|
   t.pattern = 'spec/**/*_spec.rb'
   t.warning = false
@@ -29,21 +29,6 @@ task :web do
   sh 'rake db:drop'
   sh 'rake db:migrate'
   sh 'rackup'
-end
-
-desc 'run tests'
-task :gateway_spec do
-  sh 'ruby spec/gateway_mlb_api_spec.rb'
-end
-
-desc 'run db tests'
-task :spec_db do
-  sh 'ruby spec/gateway_database_spec.rb'
-end
-
-desc 'run domain tests'
-task :spec_domain do
-  sh 'ruby spec/domain_speccc.rb'
 end
 
 desc 'Keep rerunning tests upon changes'
