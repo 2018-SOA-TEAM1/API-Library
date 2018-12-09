@@ -17,7 +17,7 @@ module Views
     end
 
     def innings_num
-      @whole_game.innings.length - 1
+      @whole_game.innings.length
     end
 
     def each_inning

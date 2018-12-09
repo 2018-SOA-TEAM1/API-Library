@@ -6,10 +6,7 @@ require_relative 'pages/home_page.rb'
 describe 'Acceptance Tests' do
   include PageObject::PageFactory
 
-  DatabaseHelper.setup_database_cleaner
-
   before do
-    DatabaseHelper.wipe_database
     # @headless = Headless.new
     @browser = Watir::Browser.new :firefox
   end
@@ -43,7 +40,6 @@ describe 'Acceptance Tests' do
           good_team_name = SEARCH_TEAM_NAME
           page.search_new_game(good_date, good_team_name)
         end
-
         # WHEN: back to homepage
         Watir::Wait.until do
           @browser.h2(class: 'h2_title').present?
