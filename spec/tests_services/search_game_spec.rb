@@ -5,8 +5,8 @@ require_relative '../helpers/spec_helper.rb'
 describe 'Integration test of SearchGame service and API gateway' do
   it 'must add a legitimate game' do
     # WHEN we request to add a game
-    # to pass form, we need to convert '-' to '/'
-    form_date_input = GAME_DATE_API.tr '-', '/'
+    # to pass form, we need to convert '_' to '/'
+    form_date_input = GAME_DATE_API.tr '_', '/'
     date_request = MLBAtBat::Forms::DateRequest.call(game_date: form_date_input)
     input = { date: date_request, team_name: SEARCH_TEAM_NAME }
     res = MLBAtBat::Service::SearchGame.new.call(input)
@@ -16,6 +16,6 @@ describe 'Integration test of SearchGame service and API gateway' do
     game = res.value!
 
     _(game.game_pk).must_equal 530_779
-    _(game.innings.count).must_equal 10 # first inning is null
+    _(game.innings.count).must_equal 9
   end
 end
