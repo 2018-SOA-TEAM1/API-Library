@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RACK_ENV=test rackup -p 9292 &
+RACK_ENV=test rackup -p 9000 &
 app_pid=$!
 
 rake spec_accept

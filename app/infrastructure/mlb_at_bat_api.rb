@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'http'
+require 'json'
 
 module MLBAtBat
   module Gateway
@@ -88,6 +89,8 @@ module MLBAtBat
         end
 
         def message
+          puts payload
+          puts payload.class
           payload['message']
         end
 

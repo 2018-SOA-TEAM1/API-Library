@@ -18,7 +18,7 @@ module MLBAtBat
           .find_all_games
         result.success? ? Success(result.payload) : Failure(result.message)
       rescue StandardError
-        Failure('Cannot find first game right now; please try again later')
+        Failure('Cannot find all games right now; please try again later')
       end
 
       def depresent_games(games_json)

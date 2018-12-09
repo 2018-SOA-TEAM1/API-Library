@@ -16,6 +16,6 @@ describe 'Integration test of FindFirstGame service and API gateway' do
     game = res.value!
 
     _(game.game_pk).must_equal 530_779
-    _(game.innings.count).must_equal 10 # first inning is null
+    _(game.innings.count).must_equal 9
   end
 end

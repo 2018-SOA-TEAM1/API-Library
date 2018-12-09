@@ -16,7 +16,7 @@ describe 'Unit test of MLBAtBat API gateway' do
     data = res.parse
 
     _(data.keys.count).must_be :>=, 11
-    _(data['innings'].count).must_equal 10 # (0th inning is empty)
+    _(data['innings'].count).must_equal 9
     _(data['gcms'].count).must_equal 3
   end
 
@@ -51,7 +51,7 @@ describe 'Unit test of MLBAtBat API gateway' do
     _(res.success?).must_equal true
     data = res.parse
     _(data.keys.count).must_be :>=, 11
-    _(data['innings'].count).must_equal 10 # (0th inning is empty)
+    _(data['innings'].count).must_equal 9
     _(data['gcms'].count).must_equal 3
   end
 

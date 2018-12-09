@@ -52,10 +52,9 @@
               span class="team-name"
                 = whole_game.home_team_name
             - whole_game.each_inning do |inning|
-              - if inning.index != 0
-                  td.home.score
-                    span class="score" id="#{inning.index_str}.home_score"
-                      = inning.home_runs
+                td.home.score
+                  span class="score" id="#{inning.index_str}.home_score"
+                    = inning.home_runs
             td id='home_team_runs'
               span class="runs"
                 = whole_game.home_runs
@@ -70,10 +69,9 @@
               span class="team-name"
                 = whole_game.away_team_name
             - whole_game.each_inning do |inning|
-              - if inning.index != 0
-                  td.away.score
-                    span class="score" id="#{inning.index_str}.away_score"
-                      = inning.away_runs
+                td.away.score
+                  span class="score" id="#{inning.index_str}.away_score"
+                    = inning.away_runs
             td id='away_team_runs'
               span class="runs"
                 = whole_game.away_runs
