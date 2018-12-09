@@ -18,7 +18,7 @@ module MLBAtBat
         if input[:date].success?
           date = input[:date][:game_date]
           # convert it back to correct format
-          date.tr! '/', '-'
+          date.tr! '/', '_'
           Success(date: date, team_name: input[:team_name])
         else
           Failure(input[:date].errors.values.join('; '))
@@ -29,7 +29,7 @@ module MLBAtBat
         result = Gateway::Api.new(MLBAtBat::App.config)
           .search_game(input[:date], input[:team_name])
 
-        result.success? ? Success(result.payload) : Failure(result.message)
+        result.success? ? Success(result.payload) : Failure('Game not exist')
       rescue StandardError
         Failure('Cannot add projects right now; please try again later')
       end

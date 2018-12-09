@@ -15,11 +15,11 @@ module Views
     end
 
     def home_runs
-      @inning.home_runs
+      @inning['home_runs']
     end
 
     def away_runs
-      @inning.away_runs
+      @inning['away_runs']
     end
   end
 end

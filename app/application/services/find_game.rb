@@ -16,7 +16,7 @@ module MLBAtBat
       def find_game(input)
         result = Gateway::Api.new(MLBAtBat::App.config)
           .find_game_db(input[:date], input[:team_name])
-        result.success? ? Success(result.payload) : Failure(result.message)
+        result.success? ? Success(result.payload) : Failure('Fail to show game')
       rescue StandardError
         Failure('Cannot find game right now; please try again later')
       end

@@ -25,20 +25,21 @@ module MLBAtBat
       # GET /
       routing.root do
         # get games from db
-        result = Service::ListGames.new.call
+        result = Service::FindAllGames.new.call
         result.failure? && flash[:error] = result.failure
 
-        games = result.value!
+        games = result.value!.livegames
         games.none? && flash.now[:notice] = 'Search for a game to get started'
 
         if games.any? && $whole_game.nil?
-          result = Service::ListDbGame.new.whole_game
+          result = Service::FindFirstGame.new.call
           $whole_game = result.value!
         end
 
         # show particular game information in homepage
         viewable_games = Views::GamesList.new(games)
         games.any? && viewable_whole_game = Views::WholeGame.new($whole_game)
+
         view 'home', locals: { games: viewable_games,
                                whole_game: viewable_whole_game }
       end
@@ -68,11 +69,9 @@ module MLBAtBat
         routing.on String, String do |date, team_name|
           # GET /game_info/date/team_name
           routing.get do
-            date = date.split('_').join('/')
-            team_name = team_name.split('_').join(' ')
-
             # find particular game from db
-            find_game = Service::FindGame.new.call(date, team_name)
+            input = { date: date, team_name: team_name }
+            find_game = Service::FindGame.new.call(input)
             if find_game.failure?
               flash[:error] = find_game.failure
               routing.redirect '/'
@@ -85,12 +84,6 @@ module MLBAtBat
           end
         end
       end
-    end
-
-    def valid_date?(str, format = '%m/%d/%Y')
-      Date.strptime(str, format)
-    rescue StandardError
-      false
     end
   end
 end
