@@ -13,6 +13,7 @@ module MLBAtBat
     plugin :halt
     plugin :flash
     plugin :all_verbs
+    plugin :caching
     plugin :render, engine: 'slim', views: 'app/presentation/views'
     plugin :assets, path: 'app/presentation/assets',
                     css: 'style.css', js: 'datepicker.js'
@@ -80,6 +81,7 @@ module MLBAtBat
 
             viewable_game_info = Views::GameInfo.new(game_info)
             # show game information which is from db
+            response.expires 60, public: true
             view 'game_info', locals: { game_info: viewable_game_info }
           end
         end
