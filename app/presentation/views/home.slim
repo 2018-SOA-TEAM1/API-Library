@@ -11,20 +11,21 @@
         }
       .col-md-5.col-sm-5
         .text-right Team Name
-        input {
-          type='text' name='team_name'
-          id='team_name_input' class="form-control"
-          placeholder='Baltimore Orioles'
-        }
-        / select {
-        /   name="team_name"
-        /   class="custom-select"
-        /   id="team-name-input"
-        /   onclick="addTeamName(#{team_name})"
+        / input {
+        /   type='text' name='team_name'
+        /   id='team_name_input' class="form-control"
+        /   placeholder='Baltimore Orioles'
         / }
-        /   option {
-        /     selected
-        /   } = "Choose..."
+        select {
+          name="team_name"
+          class="custom-select"
+          id="team-name-input"
+          onclick="addTeamName()"
+          onchange="storeSelectTeamName()"
+        }
+          option {
+            selected
+          } = "Choose..."
       .col-md-2.col-sm-5
         button {
           type='submit' id='game_date_submit' class='submit'

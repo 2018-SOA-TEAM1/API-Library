@@ -50,7 +50,7 @@ module MLBAtBat
           # GET /game_info/
           routing.post do
             date = routing.params['game_date']
-            team_name = routing.params['team_name']
+            team_name = routing.cookies['teamName']
             date_request = Forms::DateRequest.call(routing.params)
 
             input = { date: date_request, team_name: team_name }
