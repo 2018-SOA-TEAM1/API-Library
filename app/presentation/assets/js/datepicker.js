@@ -54,14 +54,14 @@ function parseHTMLAndAddTeamName(responseText) {
     option.selected = true;
     option.innerHTML = "Choose...";
     document.getElementById("team-name-input").appendChild(option);
-    var len = teamName.length
+    var len = teamName.length;
     for (i = 0; i < len; i++) {
         var option = document.createElement("option");
         option.value = i;
         option.innerHTML = teamName[i];
         document.getElementById("team-name-input").appendChild(option);
     }
-    console.log(teamName)
+    console.log(teamName);
 
     return teamName
 }
@@ -78,4 +78,11 @@ function addTeamName() {
         lastGameDate = getCookie("date")
         getTeamName()
     }
+}
+
+function storeSelectTeamName() {
+    var e = document.getElementById("team-name-input");
+    var selectedTeamName = e.options[e.selectedIndex].text;
+
+    document.cookie = "teamName=" + selectedTeamName
 }
