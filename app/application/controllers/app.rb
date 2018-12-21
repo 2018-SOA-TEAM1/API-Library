@@ -63,6 +63,7 @@ module MLBAtBat
 
             date = date.split('/').join('_')
             team_name = team_name.split(' ').join('_')
+
             routing.redirect "game_info/#{date}/#{team_name}"
           end
         end
@@ -72,17 +73,20 @@ module MLBAtBat
           routing.get do
             # find particular game from db
             input = { date: date, team_name: team_name }
+
             find_game = Service::FindGame.new.call(input)
             if find_game.failure?
               flash[:error] = find_game.failure
               routing.redirect '/'
             end
-            game_info = find_game.value!
 
-            viewable_game_info = Views::GameInfo.new(game_info)
-            # show game information which is from db
-            response.expires 60, public: true
-            view 'game_info', locals: { game_info: viewable_game_info }
+            result = Service::FindAllGames.new.call
+            games = result.value!.livegames
+            # show particular game information in homepage
+            viewable_games = Views::GamesList.new(games)
+            games.any? && viewable_whole_game = Views::WholeGame.new($whole_game)
+            view 'home', locals: { games: viewable_games,
+                                   whole_game: viewable_whole_game }
           end
         end
       end
