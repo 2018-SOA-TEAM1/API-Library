@@ -8,4 +8,7 @@ test:
   DB_FILENAME: app/infrastructure/database/local/test.db
   # Application
   API_HOST: http://localhost:9090
-  APP_HOST: http://localhost:9000
+
+production:
+  API_HOST: https://mlbatbat-api.herokuapp.com
+  APP_HOST: https://mlbatbat.herokuapp.com
