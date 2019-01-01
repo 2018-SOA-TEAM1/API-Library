@@ -4,7 +4,7 @@ $('#datepicker').datepicker({
 
 function storeDate() {
     var date = document.getElementById("datepicker").value;
-    document.cookie = "date=" + date
+    document.cookie = "date=" + date + ";path=/";
 }
 
 function getCookie(cname) {
@@ -61,7 +61,7 @@ function parseHTMLAndAddTeamName(responseText) {
         option.innerHTML = teamName[i];
         document.getElementById("team-name-input").appendChild(option);
     }
-    console.log(teamName);
+    // console.log(teamName);
 
     return teamName
 }
@@ -84,5 +84,5 @@ function storeSelectTeamName() {
     var e = document.getElementById("team-name-input");
     var selectedTeamName = e.options[e.selectedIndex].text;
 
-    document.cookie = "teamName=" + selectedTeamName
+    document.cookie = "teamName=" + selectedTeamName + ";path=/";
 }
