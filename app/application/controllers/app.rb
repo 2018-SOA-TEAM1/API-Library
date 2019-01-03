@@ -14,6 +14,7 @@ module MLBAtBat
     plugin :flash
     plugin :all_verbs
     plugin :caching
+    plugin :public, root: 'app/presentation/public'
     plugin :render, engine: 'slim', views: 'app/presentation/views'
     plugin :assets, path: 'app/presentation/assets',
                     css: 'style.css', js: 'datepicker.js'
