@@ -2,6 +2,11 @@ $('#datepicker').datepicker({
     uiLibrary: 'bootstrap4'
 });
 
+function storeDateAndAddTeamName() {
+    storeDate()
+    addTeamName()
+}
+
 function storeDate() {
     var date = document.getElementById("datepicker").value;
     document.cookie = "date=" + date + ";path=/";
@@ -61,7 +66,7 @@ function parseHTMLAndAddTeamName(responseText) {
         option.innerHTML = teamName[i];
         document.getElementById("team-name-input").appendChild(option);
     }
-    // console.log(teamName);
+    console.log(teamName);
 
     return teamName
 }

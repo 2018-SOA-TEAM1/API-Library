@@ -7,7 +7,7 @@
           type='text' name='game_date'
           id='datepicker' class="form-control"
           placeholder='07/10/2018'
-          onchange="storeDate()"
+          onchange="storeDateAndAddTeamName()"
         }
       .col-md-5.col-sm-5
         .text-right Team Name
@@ -20,7 +20,6 @@
           name="team_name"
           class="custom-select"
           id="team-name-input"
-          onclick="addTeamName()"
           onchange="storeSelectTeamName()"
         }
           option {
