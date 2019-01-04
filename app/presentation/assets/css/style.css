@@ -1,5 +1,9 @@
-h1 {
-  font-weight: bold;
+a#main-header {
+  color: rgb(49, 63, 187);
+}
+
+a#main-header:hover {
+  color: rgb(218, 35, 35);
 }
 
 .top-buffer { 
