@@ -23,6 +23,7 @@ module MLBAtBat
 
     route do |routing|
       routing.assets # load CSS
+      routing.public
 
       # GET /
       routing.root do
