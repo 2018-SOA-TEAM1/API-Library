@@ -1,14 +1,19 @@
 #banner {
-  background-image: url("/bkg.png");
+  background-image: url("/bkg1.png");
   background-size: cover;
 }
 
 a#main-header {
-  color: rgb(49, 63, 187);
+  color: rgb(255, 255, 255);
+  font-weight: bold;
 }
 
 a#main-header:hover {
   color: rgb(218, 35, 35);
+}
+
+p#sub-header {
+  color: rgb(255, 255, 255);
 }
 
 .top-buffer { 
