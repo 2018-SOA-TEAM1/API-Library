@@ -17,7 +17,7 @@ describe 'Unit test of MLBAtBat API gateway' do
 
     _(data.keys.count).must_be :>=, 11
     _(data['innings'].count).must_equal 9
-    _(data['gcms'].count).must_equal 3
+    _(data['gcms'].count).must_equal 6
   end
 
   it 'must find game_info with date and teamname which is already in db' do
@@ -52,7 +52,7 @@ describe 'Unit test of MLBAtBat API gateway' do
     data = res.parse
     _(data.keys.count).must_be :>=, 11
     _(data['innings'].count).must_equal 9
-    _(data['gcms'].count).must_equal 3
+    _(data['gcms'].count).must_equal 6
   end
 
   it 'must find all games in db' do

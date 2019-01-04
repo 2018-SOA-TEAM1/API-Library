@@ -91,3 +91,44 @@ function storeSelectTeamName() {
 
     document.cookie = "teamName=" + selectedTeamName + ";path=/";
 }
+
+// lively get latest play information (description)
+var receive_index = 0;
+
+function changeReceiveLiveInfo() {
+    var e = document.getElementById("change_button");
+    e.classList.toggle("btn-danger");
+    e.classList.toggle("btn-success");   
+}
+
+// default: 30000 (30 sec)
+var myVar = setInterval(myTimer, 10000);
+
+function myTimer() {
+    var e = document.getElementById("change_button");
+    if (e.classList.contains("btn-success")) {
+        getLiveInfo();
+        receive_index += 1;
+    }
+}
+
+async function getLiveInfo() {
+    var game_pk = document.getElementById("game_pk").textContent
+    var getUrl = 'https://statsapi.mlb.com/api/v1.1/game/' + game_pk + '/feed/live'
+    
+    httpGetAsync(getUrl, parseLiveData)
+}
+
+function parseLiveData(responseText) {
+    parsedText = JSON.parse(responseText)
+
+    // for demo
+    pick_index = receive_index;
+    if (pick_index > parsedText.liveData.plays.allPlays.length - 1) {
+        pick_index = parsedText.liveData.plays.allPlays.length - 1;
+    }
+
+    play_description = parsedText.liveData.plays.allPlays[pick_index].result.description
+    document.getElementById("live_info").textContent = play_description;
+    return play_description
+}
