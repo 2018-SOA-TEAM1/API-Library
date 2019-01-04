@@ -67,5 +67,9 @@ module Views
     def away_errors
       @whole_game.away_errors
     end
+
+    def game_pk
+      @whole_game.game_pk
+    end
   end
 end
