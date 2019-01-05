@@ -29,6 +29,9 @@
     .col-md-12.blank-row.top-buffer.text-left.bottom-buffer
       span class="title"
         = "Line Score"
+    - if games.any?
+      span id="game_pk" class="hidden"
+        = whole_game.game_pk
   .row
     .col-md-12.blank-row
   - if games.any?
@@ -77,14 +80,14 @@
             span class="errors"
               = whole_game.away_errors
 
-  .row.vertical-align.query-bar
-    .col-md-5.col-sm-5
-      button {
+  .row.vertical-align.live-bar
+    .col-md-3.col-sm-3
+      button.live-button {
         id='change_button'
         onclick="changeReceiveLiveInfo()" class="btn btn-danger"
-      } Reveice latest news
-    .col-md-7.col-sm-7
-      span id="live_info"
+      } Notify On
+    .col-md-9.col-sm-9
+      span.live_span id="live_info"
         = ""
 
   .row
@@ -112,11 +115,6 @@
             td id='td_away_team'
               span class="gamee_away_team" id="#{game.index_str}.contributors"
                 = game.away_team_name
-  .row 
-    .col-md-12.blank-row.top-buffer.text-left.bottom-buffe
-  - if games.any?
-    span id="game_pk" class="hidden"
-        = whole_game.game_pk
   .row
     .col-md-12.blank-row.top-buffer.text-left.bottom-buffer
       span class="title"
