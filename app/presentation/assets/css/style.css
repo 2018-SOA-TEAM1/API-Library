@@ -97,6 +97,41 @@ tr.collapse.in {
   padding: 5px 5px 5px 5px;
 }
 
+.live-bar {
+  /*
+  border:0.5px solid;
+  border-color: gray;
+  border-width: thin;
+  */
+  background-color: black;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.live-button {
+  font-family: "Arial Black", Gadget, sans-serif;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 50px;
+  width: 100px;
+}
+
+.live-button:hover {background-color: #3e8e41}
+
+.live-button:active {
+  transform: translateY(4px);
+}
+
+.live_span {
+  font-family: "Courier New", Courier, monospace;
+  color: white;
+}
+
+
+
 .btn {
   background-color: rgb(180, 174, 174);
 }
@@ -108,5 +143,5 @@ footer {
 }
 
 .hidden {
-  font-size: 0; 
+  display: none; 
 }

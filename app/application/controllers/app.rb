@@ -17,7 +17,7 @@ module MLBAtBat
     plugin :public, root: 'app/presentation/public'
     plugin :render, engine: 'slim', views: 'app/presentation/views'
     plugin :assets, path: 'app/presentation/assets',
-                    css: 'style.css', js: 'datepicker.js'
+                    css: 'style.css', js: ['datepicker.js', 'live_info.js']
 
     use Rack::MethodOverride
 
