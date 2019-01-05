@@ -107,7 +107,7 @@ a#main-header:hover {
   border-radius: 50%;
   cursor: pointer;
   height: 50px;
-  width: 100px;
+  width: 120px;
 }
 
 .live-button:hover {background-color: #3e8e41}
