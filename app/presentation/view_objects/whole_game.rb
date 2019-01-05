@@ -32,6 +32,12 @@ module Views
       end
     end
 
+    def each_gcm_with_index
+      @gcms.each_with_index do |gcm, index|
+        yield gcm, index
+      end
+    end
+
     def date
       @whole_game.date
     end
