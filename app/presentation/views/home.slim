@@ -79,16 +79,16 @@
           td id='away_team_errors'
             span class="errors"
               = whole_game.away_errors
-
-  .row.vertical-align.live-bar
-    .col-md-3.col-sm-3
-      button.live-button {
-        id='change_button'
-        onclick="changeReceiveLiveInfo()" class="btn btn-danger"
-      } Notify On
-    .col-md-9.col-sm-9
-      span.live_span id="live_info"
-        = ""
+  - if games.any?
+    .row.vertical-align.live-bar
+      .col-md-3.col-sm-3
+        button.live-button {
+          id='change_button'
+          onclick="changeReceiveLiveInfo()" class="btn btn-danger"
+        } Notify On
+      .col-md-9.col-sm-9
+        span.live_span id="live_info"
+          = ""
 
   .row
     .col-md-12.blank-row.top-buffer.text-left.bottom-buffer

@@ -11,13 +11,11 @@ function changeReceiveLiveInfo() {
         change_button.textContent = "Notify On"
     } else {
         change_button.textContent = "Notify Off"
-        var text = live_info.textContent;
-        live_info.textContent = "(Stop) " + text;
     }
 }
 
-// default: 30000 (30 sec)
-var myVar = setInterval(myTimer, 10000);
+// default: 5000 (5 sec)
+var myVar = setInterval(myTimer, 5000);
 
 function myTimer() {
     var e = document.getElementById("change_button");
@@ -44,6 +42,11 @@ function parseLiveData(responseText) {
     }
 
     play_description = parsedText.liveData.plays.allPlays[pick_index].result.description
-    document.getElementById("live_info").textContent = play_description;
+
+    $("#live_info").animate({'opacity': 0}, 400, function(){
+        document.getElementById("live_info").textContent = play_description;
+        $(this).html(play_description).animate({'opacity': 1}, 400);    
+    });
+    
     return play_description
 }

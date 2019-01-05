@@ -57,3 +57,6 @@ gem 'rake', '~> 12.3'
 group :development, :test do
   gem 'rerun'
 end
+
+# jQuery
+gem "jquery-middleman"
