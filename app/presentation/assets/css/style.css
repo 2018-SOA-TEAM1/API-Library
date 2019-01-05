@@ -24,6 +24,10 @@ p#sub-header {
   cursor: pointer;
 }
 
+tr.collapse.in {
+  display:table-row;
+}
+
 .team-name {
   font-weight: bold
 }

@@ -124,15 +124,15 @@
   .row
     .col-md-12.blank-row
   - if games.any?
-    table class="table table-hover" id="game_changing_moments"
+    table class="table table-striped" id="game_changing_moments"
       thead
         tr
           th Inning
           th Event
           th Description
       tbody
-        - whole_game.each_gcm do |gcm|
-          tr class="table-row"
+        - whole_game.each_gcm_with_index do |gcm, index|
+          tr class="table-row" data-toggle="collapse" data-target=".order#{index}"
             td.td_inning
               span class="gcm_inning"
                 = gcm.inning_index
@@ -142,3 +142,7 @@
             td.td_description
               span class="gcm_description"
                 = gcm.description
+          tr class="table-row collapse order#{index}"
+            td colspan="3"
+              .form-group
+                textarea.form-control rows="3"
